@@ -47,7 +47,7 @@ class GameThread implements Runnable {
     PlayerEntity playerTwo = new PlayerEntity(second.getPlayerIP(), secondPlayerTranscript);
 
     first.setTranscript(firstPlayerTranscript);
-    second.setTranscript(firstPlayerTranscript);
+    second.setTranscript(secondPlayerTranscript);
 
 
     final Session session = HibernateConfig.getSessionFactory().getCurrentSession();
