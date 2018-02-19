@@ -1,9 +1,12 @@
 package com.academy.solid.nie.server;
 
+import com.academy.solid.nie.server.entity.Transcript;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,9 +20,12 @@ public final class NetPlayer implements Player {
     private List<List<String>> shipsPositions;
     private boolean wasSunk;
 
+    private Socket clientSocket;
+    private Transcript transcript;
+
     @Override
     public void register(final ServerSocket serverSocket) throws IOException {
-        Socket clientSocket = serverSocket.accept();
+        this.clientSocket = serverSocket.accept();
         out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
 
@@ -67,5 +73,29 @@ public final class NetPlayer implements Player {
     @Override
     public boolean isGameOver() {
         return shipsPositions.stream().allMatch(List::isEmpty);
+    }
+
+    @Override
+    public String getPlayerIP() {
+        return clientSocket.getInetAddress().toString();
+    }
+
+    public List<String> getMessages() throws IOException {
+        List<String> messages = new ArrayList<>();
+        String line;
+        while ((line = in.readLine()) != null){
+            messages.add(line);
+        }
+        return messages;
+    }
+
+    @Override
+    public void setTranscript(final Transcript transcript) {
+        this.transcript = transcript;
+    }
+
+    @Override
+    public Transcript getTranscript() {
+        return transcript;
     }
 }

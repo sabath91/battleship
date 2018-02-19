@@ -6,8 +6,8 @@ import java.util.stream.IntStream;
  * Main class for the game.
  */
 public final class Main {
-    private static final int DEFAULT_PORT = 8080;
-    private static final int NUMBER_OF_GAMES = 10;
+    private static final int DEFAULT_PORT = 9970;
+    private static final int NUMBER_OF_GAMES = 0;
 
     private Main() {
     }

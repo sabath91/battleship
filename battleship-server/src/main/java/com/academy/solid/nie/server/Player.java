@@ -1,7 +1,10 @@
 package com.academy.solid.nie.server;
 
+import com.academy.solid.nie.server.entity.Transcript;
+
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.List;
 
 /**
  * Provides methods for the player.
@@ -54,4 +57,11 @@ public interface Player {
      */
     boolean isGameOver();
 
+    String getPlayerIP();
+
+    List<String> getMessages() throws IOException;
+
+    void setTranscript(Transcript firstPlayerTranscript);
+
+    Transcript getTranscript();
 }
