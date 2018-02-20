@@ -1,7 +1,5 @@
 package com.academy.solid.nie.server;
 
-import com.academy.solid.nie.server.entity.Transcript;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.List;
@@ -61,7 +59,7 @@ public interface Player {
 
     List<String> getMessages() throws IOException;
 
-    void setTranscript(Transcript firstPlayerTranscript);
+    void setPlayerDatabaseId(int id);
 
-    Transcript getTranscript();
+    int getPlayerDatabaseId();
 }

@@ -46,8 +46,6 @@ class GameThread implements Runnable {
     PlayerEntity playerOne = new PlayerEntity(first.getPlayerIP(), firstPlayerTranscript);
     PlayerEntity playerTwo = new PlayerEntity(second.getPlayerIP(), secondPlayerTranscript);
 
-    first.setTranscript(firstPlayerTranscript);
-    second.setTranscript(secondPlayerTranscript);
 
 
     final Session session = HibernateConfig.getSessionFactory().getCurrentSession();
@@ -57,6 +55,9 @@ class GameThread implements Runnable {
     gameEntity.addPlayer(playerTwo);
     session.save(gameEntity);
     session.getTransaction().commit();
+    first.setPlayerDatabaseId(playerOne.getId());
+    second.setPlayerDatabaseId(playerTwo.getId());
+    System.out.println(playerOne.getId() + "    " + playerTwo.getId());
     session.close();
 
   }

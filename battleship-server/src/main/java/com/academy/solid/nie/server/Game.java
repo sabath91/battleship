@@ -1,6 +1,7 @@
 package com.academy.solid.nie.server;
 
 import com.academy.solid.nie.server.config.HibernateConfig;
+import com.academy.solid.nie.server.entity.PlayerEntity;
 import com.academy.solid.nie.server.entity.Statement;
 import com.academy.solid.nie.server.entity.Transcript;
 import org.hibernate.Session;
@@ -40,11 +41,22 @@ class Game {
     private void saveTranscriptMsg(Player player, String... msg) {
         final Session session = HibernateConfig.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
-        final Transcript transcript = player.getTranscript();
+        final PlayerEntity retrievedPlayer = session.get(PlayerEntity.class, player.getPlayerDatabaseId());
+        final Transcript transcript = retrievedPlayer.getTranscript();
         for (final String s : msg) {
             transcript.addStatement(new Statement(s));
         }
         session.update(transcript);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    private void saveResult(Player player, boolean isWinner){
+        final Session session = HibernateConfig.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        final PlayerEntity retrievedPlayer = session.get(PlayerEntity.class, player.getPlayerDatabaseId());
+        retrievedPlayer.setWinner(isWinner);
+        session.update(retrievedPlayer);
         session.getTransaction().commit();
         session.close();
     }
@@ -73,7 +85,9 @@ class Game {
             if (otherPlayer.isGameOver()) {
                 log(getNameOfCurrentPlayer() + "has won the game");
                 saveTranscriptMsg(currentPlayer,"You won");
+                saveResult(currentPlayer, true);
                 saveTranscriptMsg(otherPlayer,"you lost");
+                saveResult(otherPlayer, false);
             }
         }
     }

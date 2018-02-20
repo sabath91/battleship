@@ -31,7 +31,6 @@ public class Transcript {
   @OneToMany(cascade = CascadeType.ALL,
       fetch = FetchType.LAZY,
   mappedBy = "transcript")
-//  @JoinColumn (name = "transcript" , referencedColumnName = "transcript_id")
   private List<Statement> statements;
 
   public Transcript() {

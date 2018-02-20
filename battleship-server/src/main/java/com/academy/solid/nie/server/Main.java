@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
  */
 public final class Main {
     private static final int DEFAULT_PORT = 9970;
-    private static final int NUMBER_OF_GAMES = 0;
+    private static final int NUMBER_OF_GAMES = 10;
 
     private Main() {
     }

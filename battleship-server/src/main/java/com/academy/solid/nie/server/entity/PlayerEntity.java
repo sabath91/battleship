@@ -37,13 +37,12 @@ public class PlayerEntity {
   @Column(name = "is_winner")
   private boolean IsWinner;
 
+  public PlayerEntity() {
+  }
+
   public PlayerEntity(final String identity, final Transcript transcript) {
     this.identity = identity;
     this.transcript = transcript;
-  }
-
-  public PlayerEntity(final String identity) {
-    this.identity = identity;
   }
 
   public int getId() {
@@ -85,6 +84,5 @@ public class PlayerEntity {
   public void setWinner(final boolean winner) {
     IsWinner = winner;
   }
-
 
 }

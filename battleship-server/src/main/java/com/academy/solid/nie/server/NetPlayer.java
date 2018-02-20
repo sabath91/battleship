@@ -1,7 +1,5 @@
 package com.academy.solid.nie.server;
 
-import com.academy.solid.nie.server.entity.Transcript;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,7 +19,7 @@ public final class NetPlayer implements Player {
     private boolean wasSunk;
 
     private Socket clientSocket;
-    private Transcript transcript;
+    private int id;
 
     @Override
     public void register(final ServerSocket serverSocket) throws IOException {
@@ -90,12 +88,13 @@ public final class NetPlayer implements Player {
     }
 
     @Override
-    public void setTranscript(final Transcript transcript) {
-        this.transcript = transcript;
+    public void setPlayerDatabaseId(final int id) {
+        this.id = id;
     }
 
     @Override
-    public Transcript getTranscript() {
-        return transcript;
+    public int getPlayerDatabaseId() {
+        return id;
     }
+
 }
