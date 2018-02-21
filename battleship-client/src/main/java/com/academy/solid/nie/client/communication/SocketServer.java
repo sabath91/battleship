@@ -67,6 +67,27 @@ public class SocketServer implements Server {
         server.sendGameOverToOpponent();
     }
 
+    @Override
+    public void sendAskForGamesId(final String getGames) {
+        LOGGER.info(getGames);
+        try {
+            server.send(getGames);
+        } catch (IOException e) {
+            LOGGER.warning(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<String> receiveGamesId(){
+        String ids = server.receive();
+        if (ids == null || ids.equals("Q")) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.stream(ids.split(","))
+            .collect(Collectors.toList());
+    }
+
     private Function<String[], int[]> stringArrayToIntArray() {
         return arr -> Stream.of(arr)
                 .mapToInt(Integer::parseInt)
@@ -103,7 +124,7 @@ public class SocketServer implements Server {
      * @throws IOException when there was problems during receiving data from server
      */
     public List<Point2D> receiveMoves() throws IOException {
-        String moves = server.receiveMoves();
+        String moves = server.receive();
         if (moves == null || moves.equals("Q")) {
             return new ArrayList<>();
         }
@@ -114,4 +135,6 @@ public class SocketServer implements Server {
                 .map(arr -> Point2D.of(arr[0], arr[1]))
                 .collect(Collectors.toList());
     }
+
+
 }

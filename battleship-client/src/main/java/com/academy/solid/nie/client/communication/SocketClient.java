@@ -62,7 +62,13 @@ public final class SocketClient implements ShipClient {
     }
 
     @Override
-    public String receiveMoves() throws IOException {
-        return in.readLine();
+    public String receive(){
+        try {
+            return in.readLine();
+        } catch (IOException e) {
+            LOGGER.warning(e.getMessage());
+        }
+        return null;
     }
+
 }

@@ -37,7 +37,7 @@ public interface Player {
      * @return String representation of the single move.
      * @throws IOException when cannot perform a move.
      */
-    String makeMove() throws IOException;
+    String makeMove();
 
     /**
      * @param move last move of current player

@@ -1,5 +1,6 @@
 package com.academy.solid.nie.server;
 
+import com.academy.solid.nie.client.communication.SocketServer;
 import com.academy.solid.nie.server.config.HibernateConfig;
 import com.academy.solid.nie.server.entity.GameEntity;
 import com.academy.solid.nie.server.entity.PlayerEntity;
@@ -7,7 +8,10 @@ import com.academy.solid.nie.server.entity.Transcript;
 import org.hibernate.Session;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 class GameThread implements Runnable {
   private static final Logger LOGGER = Logger.getLogger(GameThread.class.getName());
@@ -33,10 +37,51 @@ class GameThread implements Runnable {
       while (!game.isGameOver()) {
         game.play();
       }
+      new Thread(() -> {
+        final String askAboutId = first.makeMove();
+        System.out.println(askAboutId);
+        getGamesIds();
+        //Receive ask for transcript
+        //    --> send list of games
+        //Choose game
+        //    --> send list of players for game
+        //Choose player
+        //    --> send transcript
+      }, "Deal With Transcipt").start();
+
+      new Thread(() -> {
+        final String askAboutId = second.makeMove();
+        System.out.println(askAboutId);
+        getGamesIds();
+        //Receive ask for transcript
+        //    --> send list of games
+        //Choose game
+        //    --> send list of players for game
+        //Choose player
+        //    --> send transcript
+      }, "Deal With Transcipt").start();
+
+
       LOGGER.info("Game over");
     } catch (IOException e) {
       LOGGER.warning(e.getMessage());
     }
+  }
+
+  private String getGamesIds() {
+
+    final Session session = HibernateConfig.getSessionFactory().getCurrentSession();
+    session.beginTransaction();
+    final List<Integer> gamesId = session.createQuery("SELECT id from GameEntity", Integer.class).getResultList();
+
+    StringBuilder result = new StringBuilder();
+    for(Integer i : gamesId){
+      result.append(i).append(",");
+    }
+
+    session.getTransaction().commit();
+    session.close();
+    return result.toString();
   }
 
   private void saveClients(final Player first, final Player second) {

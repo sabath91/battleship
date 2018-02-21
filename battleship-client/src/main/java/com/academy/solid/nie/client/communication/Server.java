@@ -1,6 +1,7 @@
 package com.academy.solid.nie.client.communication;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Lists methods for the server.
@@ -41,4 +42,8 @@ public interface Server {
      * Sends a message about the defeat to the opponent.
      */
     void sendGameOverToOpponent();
+
+    void sendAskForGamesId(String getGames);
+
+    List<String> receiveGamesId() throws IOException;
 }

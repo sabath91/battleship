@@ -111,6 +111,10 @@ class GameScene extends Application implements Runnable {
             new WindowDisplayer(MessageProviderImpl
                     .getCommunicate(Message.WIN))
                     .withButtonWhoExitSystem().display();
+            //New window with ability to choose transcript
+            //      --> drop down menu
+            //      -->
+            new WindowRetrievedTranscript(socketServer).display();
         }
         if (enemyBoard.isShipSunken(cell.getShip())) {
             enemyBoard.markShipAsSunken(cell.getShip());

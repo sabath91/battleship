@@ -48,8 +48,14 @@ public final class NetPlayer implements Player {
     }
 
     @Override
-    public String makeMove() throws IOException {
-        return in.readLine();
+    public String makeMove() {
+        String s="";
+        try {
+            s = in.readLine();
+        } catch (IOException e) {
+            LOGGER.warning(e.getMessage());
+        }
+        return s;
     }
 
     @Override

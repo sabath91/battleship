@@ -38,5 +38,6 @@ interface ShipClient {
      */
     void sendGameOverToOpponent();
 
-    String receiveMoves() throws IOException;
+    String receive();
+
 }
