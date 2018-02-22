@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -19,8 +20,10 @@ public class WindowRetrievedTranscript {
     private TextArea textArea = new TextArea();
     private ComboBox<String> gamesIndices = new ComboBox<>();
     private ComboBox<String> availableTranscripts = new ComboBox<>();
-    private SocketServer socketServer;
+    private Label label = new Label();
 
+    private SocketServer socketServer;
+    private HBox hbox = new HBox();
 
     public WindowRetrievedTranscript(final SocketServer socketServer) {
         this.socketServer = socketServer;
@@ -32,15 +35,18 @@ public class WindowRetrievedTranscript {
     public void display() {
         StackPane secondaryLayout = new StackPane();
         gamesIndices.getItems().addAll(getGames());
-//        textArea.setDisable(Boolean.TRUE);
-        secondaryLayout.getChildren().addAll(gamesIndices);
+        label.setText("Choose game:  ");
+        hbox.getChildren().addAll(label, gamesIndices);
+        secondaryLayout.getChildren().addAll(hbox);
 
         final String[] selectedId = {""};
         gamesIndices.setOnAction((event -> {
             selectedId[0] = gamesIndices.getSelectionModel().getSelectedItem();
             gamesIndices.setVisible(false);
+            hbox.getChildren().clear();
+            label.setText("Choose transcript for player:   ");
             availableTranscripts.getItems().addAll("Player1", "Player2");
-            secondaryLayout.getChildren().addAll(availableTranscripts);
+            hbox.getChildren().addAll(label, availableTranscripts);
         }));
 
         availableTranscripts.setOnAction((event -> {
