@@ -18,7 +18,7 @@
         <property name="connection.password">hbstudent</property>
 
         <!-- JDBC connection pool settings ... using built-in test pool -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">2</property>
 
         <!-- Select our SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
@@ -31,9 +31,10 @@
 		<!-- Set the current session context -->
 		<property name="current_session_context_class">thread</property>
 
+
         <!-- Create database tables -->
         <property name="hibernate.hbm2ddl.auto">update</property>
- 
+
     </session-factory>
 
 </hibernate-configuration>

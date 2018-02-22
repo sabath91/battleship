@@ -36,6 +36,10 @@ public class Transcript {
   public Transcript() {
   }
 
+  public int getId() {
+    return id;
+  }
+
   public Transcript(final PlayerEntity player) {
     this.player = player;
   }

@@ -43,7 +43,7 @@ public interface Server {
      */
     void sendGameOverToOpponent();
 
-    void sendAskForGamesId(String getGames);
+    void askDatabase(String getGames);
 
-    List<String> receiveGamesId() throws IOException;
+    List<String> receiveDatabaseResponse() throws IOException;
 }

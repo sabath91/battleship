@@ -77,7 +77,8 @@ class GameScene extends Application implements Runnable {
                 new WindowDisplayer(MessageProviderImpl
                         .getCommunicate(Message.LOSE))
                         .withButtonWhoExitSystem().display();
-                socketServer.sendGameOverToOpponent();
+//                socketServer.sendGameOverToOpponent();
+                new WindowRetrievedTranscript(socketServer).display();
             } else {
                 Cell cell = (Cell) event.getSource();
                 if (!myTurn.tryAcquire() || !shipPlacer.areAllShipsPlaced()) {

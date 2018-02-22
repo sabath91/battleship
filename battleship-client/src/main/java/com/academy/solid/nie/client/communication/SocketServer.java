@@ -68,21 +68,21 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public void sendAskForGamesId(final String getGames) {
-        LOGGER.info(getGames);
+    public void askDatabase(final String query) {
+        LOGGER.info(query);
         try {
-            server.send(getGames);
+            server.send(query);
         } catch (IOException e) {
             LOGGER.warning(e.getMessage());
         }
     }
 
     @Override
-    public List<String> receiveGamesId(){
+    public List<String> receiveDatabaseResponse(){
         String ids = server.receive();
-        if (ids == null || ids.equals("Q")) {
-            return new ArrayList<>();
-        }
+//        if (ids == null || ids.equals("Q")) {
+//            return new ArrayList<>();
+//        }
 
         return Arrays.stream(ids.split(","))
             .collect(Collectors.toList());
